@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot JpaRepository Demo</title>
+</head>
+<body>
+<script>
+
+    const BASE_URL = "http://localhost:8080/"
+
+    const getAllCoins = async () => {
+        const response = await fetch(BASE_URL);
+        const coins = await response.json(); //extract JSON from the http response
+        printResponse(coins)
+    }
+
+    const getAllCoinsSortedByNameDesc = async () => {
+        const response = await fetch(BASE_URL + "coinsSortedByNameDesc");
+        const coins = await response.json(); //extract JSON from the http response
+        printResponse(coins)
+    }
+
+    const getCoinsByMultipleSortParameters = async () => {
+        const response = await fetch(BASE_URL + "coinsByOrderByDescriptionDescNameAsc");
+        const coins = await response.json(); //extract JSON from the http response
+        printResponse(coins)
+    }
+
+    const getCoin = async (coinName) => {
+        let params = {
+            "coinName": coinName
+        };
+        const response = await fetch(BASE_URL +"coinByName?" + new URLSearchParams(params));
+        const coins = await response.json(); //extract JSON from the http response
+        if (coins != null) {
+            printResponse(coins)
+        }
+    }
+
+    const getFirstNCoins = async (count) => {
+        let params = {
+            "count": count
+        };
+        const response = await fetch(BASE_URL +"getFirstNCoins?" + new URLSearchParams(params));
+        const coins = await response.json(); //extract JSON from the http response
+        if (coins != null) {
+            printResponse(coins)
+        }
+    }
+
+    const getLastNCoins = async (count) => {
+        let params = {
+            "count": count
+        };
+        const response = await fetch(BASE_URL +"getLastNCoins?" + new URLSearchParams(params));
+        const coins = await response.json(); //extract JSON from the http response
+        if (coins != null) {
+            printResponse(coins)
+        }
+    }
+
+    function printResponse(jsonContent)
+    {
+        var str = JSON.stringify(jsonContent, null, 2);
+        let divContainer = document.getElementById("coinsJson");
+        divContainer.textContent  = str;
+    }
+</script>
+
+<table>
+    <tr>
+        <td>
+            <button onclick="getAllCoins()">Get All Coins</button>
+        </td>
+        <td>
+            <button onclick="getAllCoinsSortedByNameDesc()">Get All Coins Sorted By Name Desc</button>
+        </td>
+        <td>
+            <button onclick="getCoin('coin 5')">Get coin 5</button>
+        </td>
+        <td>
+            <button onclick="getCoin('coin 1')">Get coin 1</button>
+        </td>
+        <td>
+            <button onclick="getCoinsByMultipleSortParameters()">Get Coins Ordered By Description Descending and then Name Ascending</button>
+        </td>
+        <td>
+            <button onclick="getFirstNCoins('5')">Get oldest 5 coins</button>
+        </td>
+        <td>
+            <button onclick="getFirstNCoins('2')">Get oldest 2 coins</button>
+        </td>
+        <td>
+            <button onclick="getLastNCoins('2')">Get 2 coins ordered by newest</button>
+        </td>
+        <td>
+            <button onclick="getLastNCoins('8')">Get 8 coins ordered by newest</button>
+        </td>
+    </tr>
+</table>
+
+<pre id="coinsJson"></pre>
+</body>
+</html>
