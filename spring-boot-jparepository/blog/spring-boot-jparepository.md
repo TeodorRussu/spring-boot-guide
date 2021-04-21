@@ -64,7 +64,7 @@ This is the crucial part. A default JpaRepository can be used for the following 
 * Bring all coins
 * Bring a specific coin by id
 * Delete coin
-* Update coin // TODO
+* Update coin
 * . . .
 
 In addition to the previous ones, by defining a simple method; the followings can be performed by implementing a JpaRepository:
@@ -142,7 +142,7 @@ class CoinDataLoader : ApplicationRunner {
     }
 }
 ```
-Description values are the same for each coin, so that we can see the results according to the second value ordering. // TODO
+Description values are the same for each coin, so that we can see the results according to the second value ordering.
 
 ## Retrieving the Data
 Let's design a rest controller so that we can query the items by using our repository.
@@ -185,9 +185,8 @@ class CoinRestController {
     }
 }
 ```
-Please note that this implementation is for just demo-purpose. Normally, exception handling, logging and other production approaches would be used. 
-
-We have implemented a couple of rest methods to handle the relevant resource. 
+Please note that this implementation is for just demo-purpose. Normally, exception handling, logging and other production approaches should be integrated into the implementation.
+We have added a couple of rest methods to handle the relevant resource. 
 
 Finally, let's start the Spring with gradle (./gradlew in MacOS and Linux).
 
@@ -195,7 +194,7 @@ Finally, let's start the Spring with gradle (./gradlew in MacOS and Linux).
 gradlew bootRun
 ```
 
-If the application starts without any issue, a database is created and initialized with the demo data. From now on, we can use any rest client to call the rest interface so that we can observe the incoming data in JSON format. In the demo project, a pure Javascript implementation of a typical rest client is found. After starting the server if you open the page http://localhost:8080/index.html, then you can use the buttons to see the response of each implementation. For example, if you click the "Get coin 1", the first coin with price info is returned server and displayed on the screen. A typical coin data should be displayed similar to this one:
+If the application starts without any issue, a database is created and initialized with the demo data (a H2 database is created in the home folder). From now on, we can use any rest client to call the rest interface so that we can observe the incoming data in JSON format. In the demo project, a pure Javascript implementation of a typical rest client is found. After starting the server if you open the page http://localhost:8080/index.html, then you can use the buttons to see the response of each implementation. For example, if you click the "Get coin 1", the first coin with price info is returned server and displayed on the screen. A typical coin data should be displayed similar to this one:
 
 ```json
 {
