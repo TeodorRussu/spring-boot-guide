@@ -1,10 +1,12 @@
 # Spring Boot + SNS + LocalStack
 
-[LocalStack](https://github.com/localstack/localstack) is an open-source Python application that used to develop and test Amazon services on the local environment. It provides mock implementations of the Amazon Web Services (AWS). Also, it supports aws-cli commands in the shell. LocalStack comes with two versions: standard and pro. The standard version already provides common AWS APIs such as Lambda, SNS, SQS, S3. We can use LocalStack to test and debug our code without deploying it on the Amazon environment.
+![LocalStack](deployment.png)
+
+[LocalStack](https://github.com/localstack/localstack) is an open-source Python application that is used to develop and test Amazon services on the local environment. It provides mock implementations of the Amazon Web Services (AWS). Also, it supports aws-cli commands in the shell. LocalStack comes with three versions: standard, pro and enterprise. The standard version already provides common AWS APIs such as Lambda, SNS, SQS, S3. We can use LocalStack to test and debug our code without deploying it on the Amazon environment.
 
 In this post, we are going to integrate Spring Boot with the Simple Notification Service (SNS) of AWS on the local environment by using the LocalStack. First, we will run LocalStack and then connect to the SNS service from Spring Boot by using the official [AWS API](https://aws.amazon.com/sdk-for-java/). Then we are going to execute a couple of SNS scenarios such as publishing a message.
 
-Note: You can download the code as a project from [here](https://github.com/turkdogan/spring-boot-guide/tree/main/spring-boot-sns-localstack)
+Note: You can download the code as a Kotlin+Gradle project from [here](https://github.com/turkdogan/spring-boot-guide/tree/main/spring-boot-sns-localstack)
 
 ## Running LocalStack
 

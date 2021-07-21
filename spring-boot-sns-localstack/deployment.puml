@@ -1,0 +1,15 @@
+@startuml
+
+frame local-environment {
+node Spring
+node LocalStack
+node SNS
+node SQS
+node Lambda
+LocalStack .. SNS
+LocalStack .. SQS
+LocalStack .. Lambda
+Spring .. LocalStack: localhost:4566
+}
+
+@enduml
