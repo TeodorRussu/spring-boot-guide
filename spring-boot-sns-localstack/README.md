@@ -1,10 +1,10 @@
 # Spring Boot + SNS + LocalStack
 
-[LocalStack](https://github.com/localstack/localstack) is an open-source Python application that used to develop and test Amazon services on the local environment. It provides mock implementations of the Amazon Web Services (AWS). Also, it supports aws-cli commands in the shell. It comes with standard and pro versions. The standard version already provides common AWS APIs such as Lambda, SNS, SQS, S3. We can use LocalStack to test and debug our code without deploying it on the Amazon environment.
+[LocalStack](https://github.com/localstack/localstack) is an open-source Python application that used to develop and test Amazon services on the local environment. It provides mock implementations of the Amazon Web Services (AWS). Also, it supports aws-cli commands in the shell. LocalStack comes with two versions: standard and pro. The standard version already provides common AWS APIs such as Lambda, SNS, SQS, S3. We can use LocalStack to test and debug our code without deploying it on the Amazon environment.
 
 In this post, we are going to integrate Spring Boot with the Simple Notification Service (SNS) of AWS on the local environment by using the LocalStack. First, we will run LocalStack and then connect to the SNS service from Spring Boot by using the official [AWS API](https://aws.amazon.com/sdk-for-java/). Then we are going to execute a couple of SNS scenarios such as publishing a message.
 
-Note: You can download the code as a project from [here](https://github.com/turkdogan/spring-boot-guide/spring-boot-sns-localstack)
+Note: You can download the code as a project from [here](https://github.com/turkdogan/spring-boot-guide/tree/main/spring-boot-sns-localstack)
 
 ## Running LocalStack
 
@@ -16,26 +16,25 @@ version: '3.4'
 services:
   localstack:
     image: localstack/localstack:0.12.15
-    container_name: localstack_sns_sqs
+    container_name: localstack_sns
     ports:
       - '4566:4566'
     environment:
       - DEFAULT_REGION=us-east-1
-      - SERVICES=sqs,sns
+      - SERVICES=sns
       - DEBUG=1
       - DATA_DIR=/tmp/localstack/data
-      - HOSTNAME_EXTERNAL=${LOCALSTACK_HOSTNAME_EXTERNAL:-localhost}
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
 ```
 
-With a simple docker-compose command we can initialize and run the LocalStack easily. To start the LocalStack, let's run the following command in the directory of docker-compose.yml file.
+With a simple ```docker-compose``` command we can initialize and run the LocalStack easily. To start the LocalStack, let's run the following command in the directory of docker-compose.yml file.
 
 ```yaml
 docker-compose up -d
 ```
 
-In the first run, it might take some time to download the docker images, but in the consecutive ones, it will start faster. After running this command, we can use the SNS in our machine as if we are in the AWS environment.
+In the first run, it might take some time to download the docker image, but in the consecutive ones, it will start faster. After running this command, we can use the SNS in our local operating system as if we are in the AWS environment.
 
 ## Spring Boot with SNS Integration
 
@@ -111,11 +110,11 @@ aws --endpoint-url http://localhost:4566 sns list-topics
 The output of this command should give the following response:
 
 ```shell
-    "Topics": [
-        {
-            "TopicArn": "arn:aws:sns:us-east-1:000000000000:topic"
-        }
-    ]
+"Topics": [
+    {
+        "TopicArn": "arn:aws:sns:us-east-1:000000000000:topic"
+    }
+]
 ```
 
 ### Publish SNS Message
@@ -143,15 +142,14 @@ val result = amazonSNS.subscribe(request)
 subscriptionArn = result.subscriptionArn
 ```
 SNS supports the following subscription protocols:
+- application
+- email
+- firehose
 - http
 - https
-- email
-- email
+- lambda
 - sms
 - sqs
-- application
-- lambda
-- firehose
 
 Also, the same subscription could be done by using the aws-cli as shown below (note that, we are providing the arn of topic):
 ```shell
