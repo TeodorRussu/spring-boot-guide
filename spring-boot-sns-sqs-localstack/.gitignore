@@ -35,6 +35,15 @@ out/
 
 ### VS Code ###
 .vscode/
+logs/
+*.log
 
+### npm ###
+package-lock.json
+node_modules
+
+# Mac filesystem noise
 .DS_Store
 
+# Localstack
+.localstack
