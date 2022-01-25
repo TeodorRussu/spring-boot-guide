@@ -15,7 +15,7 @@ class AWSSQSConfig {
   fun amazonSQS(): AmazonSQSAsync {
     return AmazonSQSAsyncClient.asyncBuilder()
             .withEndpointConfiguration(AwsClientBuilder.EndpointConfiguration(
-                    "http://localhost:4566", "us-east-1"))
+                    "http://localhost:4566", "us-east-2"))
             .withCredentials(AWSStaticCredentialsProvider(
                     BasicAWSCredentials("foo", "bar")))
             .build()

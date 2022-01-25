@@ -20,17 +20,27 @@ class TestSQS() {
     @Autowired
     private lateinit var amazonSQS: AmazonSQSAsync
 
+    @Autowired
+    private lateinit var amazonS3Client: AmazonS3Client
+
     private lateinit var queueUrl: String
 
     private lateinit var message: Message
 
-    @Test
-    @Order(1)
+    @BeforeEach
     fun testCreateQueue() {
         val result = amazonSQS.createQueue(queue)
         queueUrl = result.queueUrl
-        Assertions.assertEquals(200, result.sdkHttpMetadata.httpStatusCode)
     }
+//
+//
+//    @Test
+//    @Order(1)
+//    fun testCreateQueue() {
+//        val result = amazonSQS.createQueue(queue)
+//        queueUrl = result.queueUrl
+//        Assertions.assertEquals(200, result.sdkHttpMetadata.httpStatusCode)
+//    }
 
     @Test
     @Order(1)
